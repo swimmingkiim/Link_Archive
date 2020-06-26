@@ -7,7 +7,7 @@ const Tag = ({ tagString = "" }) => {
       <span>Tags : </span>
       {tagString !== ""
         ? tagString.split(", ").map((tag) => {
-            return <span>{tag}</span>;
+            return <span key={tag}>{tag}</span>;
           })
         : null}
     </div>

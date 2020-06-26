@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import styleConfig from "./styleConfig";
+import StyleConfig from "./styleConfig";
+import Logic from "./logic";
 
-const Button = ({ type, onClickFunc = null }) => {
+const Button = ({ type, updateId = null }) => {
   return (
     <CustomButton
-      type={type === "submit" ? type : "button"}
-      onClick={onClickFunc}
-      styles={styleConfig[type]}
+      type={type === "save" ? "submit" : "button"}
+      data-post-id={String(updateId)}
+      onClick={(event) => Logic[type](event)}
+      styles={StyleConfig[type]}
     >
       {type !== "goBack" ? type : "go back"}
     </CustomButton>
