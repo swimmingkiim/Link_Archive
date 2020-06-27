@@ -6,6 +6,7 @@ import Logic from "./logic";
 const Button = ({ type, updateId = null }) => {
   return (
     <CustomButton
+			className={type + "-button"}
       type={type === "save" ? "submit" : "button"}
       data-post-id={String(updateId)}
       onClick={(event) => Logic[type](event)}
@@ -24,6 +25,7 @@ const CustomButton = styled.button`
   border: none;
   border-radius: 10%;
   color: #ffffff;
+	font-size: 125%;
   background-color: ${(props) => props.styles.bgColor};
 `;
 

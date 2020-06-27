@@ -2,10 +2,6 @@ import React from "react";
 import { create } from "react-test-renderer";
 import Tag from "../../app/src/basicComponent/Tag";
 
-const createJSXForTag = (tagString) => {
-  return <Tag tagString={tagString} />;
-};
-
 describe("test Tag's result by passing sample tagStrings", () => {
   const sampleTagStrings = [
     "HTML, CSS, Javascript",
@@ -17,8 +13,8 @@ describe("test Tag's result by passing sample tagStrings", () => {
     "test Tag component by giving [%s] as a tagString",
     (tagString, done) => {
       const tagArray = tagString.split(", ");
-      const testTag = create(createJSXForTag(tagString)).toTree();
-      expect(testTag.rendered.type).toBe("div");
+      const testTag = create(<Tag tagString={tagString}/>).toTree();
+      expect(testTag.rendered.type).toBe("ul");
       expect(testTag.props.tagString).toBe(tagString);
       expect(testTag.rendered.rendered.length).toBe(tagArray.length + 1);
       done();

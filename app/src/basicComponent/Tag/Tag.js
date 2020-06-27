@@ -3,15 +3,45 @@ import styled from "styled-components";
 
 const Tag = ({ tagString = "" }) => {
   return (
-    <div>
-      <span>Tags : </span>
+    <TagWrapper>
+      <TagLabel>Tags : </TagLabel>
       {tagString !== ""
         ? tagString.split(", ").map((tag) => {
-            return <span key={tag}>{tag}</span>;
+            return <SingleTag key={tag}>{tag}</SingleTag>;
           })
         : null}
-    </div>
+    </TagWrapper>
   );
 };
+
+const TagWrapper = styled.ul`
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	flex-wrap: wrap;
+	list-style-type: none;
+`;
+
+const TagLabel = styled.label`
+	width: fit-content;
+	display: block;
+	font-weight: 500;
+	padding: .25% 1%;
+`;
+
+const SingleTag = styled.li`
+	width: fit-content;
+	display: block;
+	padding: .25% 1%;
+	border-radius: 10%;
+	background-color: magenta;
+	text-align: center;
+
+	& + & {
+		margin-left: .5%;
+	}
+`;
 
 export default Tag;

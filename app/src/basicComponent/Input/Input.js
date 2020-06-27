@@ -1,15 +1,16 @@
 import React from "react";
 import styled from "styled-components"
 
-const Input = ({displayString, uniqueId}) => {
+const Input = ({displayString, uniqueId, onChangeFunc}) => {
 	return (
-		<InputWrapper id={uniqueId} placeholder={displayString} />
+		<InputWrapper id={uniqueId} placeholder={displayString} onChange={(event) => onChangeFunc(event.target.value)} />
 	);
 }
 
 const InputWrapper = styled.input`
-	width: 100;
-	font-size: 125%;
+	flex: auto;
+	padding: .5%;
+	font-size: 150%;
 	border: 1px solid black;
 `;
 

@@ -1,10 +1,7 @@
 import React from "react";
+import { render, unmountComponentAtNode } from "react-dom";
 import { create } from "react-test-renderer";
 import Button from "../../app/src/basicComponent/Button";
-
-const createJSXForButton = (type, updateId = null) => {
-  return <Button type={type} updateId={type === "update" ? 12345 : null} />;
-};
 
 describe("test Button's properties and onClick functions by passing the type", () => {
   const typesOfButton = ["save", "goBack", "edit", "update", "delete"];
@@ -12,7 +9,7 @@ describe("test Button's properties and onClick functions by passing the type", (
   test.each(typesOfButton)(
     "test properties of basic %s button",
     (buttonType, done) => {
-      const testButton = create(createJSXForButton(buttonType)).toTree();
+      const testButton = create(<Button type={buttonType} updateId={buttonType === "update" ? 12345 : null}/>).toTree();
       expect(testButton.rendered.props.className).toStrictEqual(
         expect.any(String)
       );
@@ -37,7 +34,7 @@ describe("test Button's properties and onClick functions by passing the type", (
     (buttonType, done) => {
       const homeAddress = "http://localhost";
       const currentAddress = window.location.href;
-      const testButton = create(createJSXForButton(buttonType));
+      const testButton = create(<Button type={buttonType} updateId={buttonType === "update" ? 12345 : null}/>).toTree();
       const mockOnClick = jest.fn(testButton.onClick);
       mockOnClick();
       expect(mockOnClick.mock.calls.length).toBe(1);
