@@ -1,13 +1,8 @@
 import React from "react";
-//import Tag from "../src/basicComponent/Tag";
-//import Button from "../src/basicComponent/Button";
-//import Input from "../src/basicComponent/Input";
+import styled, { createGlobalStyle } from "styled-components";
 import Title from "../src/basicComponent/Title";
-//import Table from "../src/basicComponent/Table";
-//import Select from "../src/basicComponent/Select";
-//import ListItem from "../src/composedComponent/ListItem";
-//import SearchBar from "../src/composedComponent/SearchBar";
 import MainList from "../src/page/MainList";
+import Form from "../src/page/Form";
 
 const App = () => {
 	
@@ -36,11 +31,29 @@ const App = () => {
 	];
 
   return (
-    <div>
-			<Title />
-			<MainList dataList={sampleData} />
-		</div>
+		<>
+			<GlobalStyle></GlobalStyle>
+			<MainWrapper>
+				<Title />
+					<Form />
+			</MainWrapper>
+		</>
   );
 };
+
+const GlobalStyle = createGlobalStyle`
+	* {
+		box-sizing: border-box;
+	};
+	html, body {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+`;
+const MainWrapper = styled.div`
+	width: 100%;
+	padding: 2%;
+`;
 
 export default App;

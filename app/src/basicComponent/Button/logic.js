@@ -6,7 +6,11 @@ const Logic = {
     window.history.back();
   },
   edit: () => {
-    document.getElementById("main-list").classList.add("edit-mode");
+		if (document.querySelector("main").classList.contains("edit-mode")) {
+    	document.querySelector("main").classList.remove("edit-mode");
+			return ;
+		}
+		document.querySelector("main").classList.add("edit-mode");
   },
   update: (event) => {
     window.location.replace(`/post/${event.target.dataset.postId}`);

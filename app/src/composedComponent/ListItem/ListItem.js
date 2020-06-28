@@ -12,8 +12,10 @@ const ListItem = ({ data }) => {
 		<ListItemWrapper>
 			<Table info={{id, link, title, date}}/>
 			<Tag tagString={tags}/>
-			<Button type="update" updateId={id} />
-			<Button type="delete" updateId={id} />
+			<ButtonWrapper>
+				<Button type="update" updateId={id} />
+				<Button type="delete" updateId={id} />
+			</ButtonWrapper>
 		</ListItemWrapper>
 	);
 };
@@ -30,9 +32,16 @@ const ListItemWrapper = styled.div`
 		margin-top: 2.5%;
 	}
 
-	& > button {
+	button {
 		display: none;
 	}
+`;
+
+const ButtonWrapper  = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
 `;
 
 export default ListItem;

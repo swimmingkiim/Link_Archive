@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Button from "../../basicComponent/Button";
 import ListItem from "../../composedComponent/ListItem";
 import SearchBar from "../../composedComponent/SearchBar";
 
@@ -31,26 +32,33 @@ const MainList = ({ dataList }) => {
 				filterString !== ""
 				? filterDataList(filterMode, filterString).map((data) => {
 					return (
-						<ListItem data={data} />
+						<ListItem key={data.id} data={data} />
 					);
 				})
 				: dataList.map((data) => {
 					return (
-						<ListItem data={data} />
+						<ListItem key={data.id} data={data} />
 					);
 				})
 			}
+			<Button type="edit" />
 		</MainListWrapper>
 	);
 };
 
 const MainListWrapper = styled.main`
 	width: 100%;
-	padding: 2%;
+	padding: 0 10%;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: stretch;
+
+	&.edit-mode {
+		.update-button, .delete-button {
+			display: block;
+		}
+	}
 `;
 
 export default MainList;

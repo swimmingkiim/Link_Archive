@@ -18,7 +18,7 @@ const SearchBar = ({ handleFilterMode, handleFilterString }) => {
 	);
 };
 
-const SearchBarWrapper = styled.form`
+const SearchBarWrapper = styled.section`
 	flex: auto;
 	padding: 1% 0;
 	display: flex;

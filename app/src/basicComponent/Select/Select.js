@@ -30,7 +30,7 @@ const Select = ({ onChangeFunc }) => {
 								onClick={(event) => {
 									Logic.changeFilter(event);
 									Logic.closeFilterList();
-									onChangeFunc(event.target.dataset.value)
+									onChangeFunc ? onChangeFunc(event.target.dataset.value) : null;
 								}}
 							>
 								{keyword}
