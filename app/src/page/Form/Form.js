@@ -1,45 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../../basicComponent/Button";
 import Input from "../../basicComponent/Input";
 
-const Form = ({ mode="new", linkId=null }) => {
+const Form = () => {
 	
+	const [titleInput, setTitleInput] = useState("");
+	const [linkInput, setLinkInput] = useState("");
+	const [tagsInput, setTagsInput] = useState("");
+
 	const inputList = [
 		{
 			displayString: "Title",
-			uniqueId: `${mode}-title`,
+			uniqueId: "title",
 		},
 		{
 			displayString: "Full Link",
-			uniqueId: `${mode}-link`,
+			uniqueId: "link",
 		},
 		{
 			displayString: "Tags(divided by comma ',')",
-			uniqueId: `${mode}-tags`,
+			uniqueId: "tags",
 		}
 	];
 
 	return (
 		<MainWrapper>
 			<FormWrapper>
-				{
-					inputList.map((item) => {
-						return (
-							<Input key={item.uniqueId} displayString={item.displayString} uniqueId={item.uniqueId} />
-						);
-					})
-				}
+				<Input
+					displayString={inputList[0].displayString}
+					uniqueId={inputList[0].uniqueId}
+					onChangeFunc={setTitleInput}
+				/>
+				<Input
+					displayString={inputList[1].displayString}
+					uniqueId={inputList[1].uniqueId}
+					onChangeFunc={setLinkInput}
+				/>
+				<Input
+					displayString={inputList[2].displayString}
+					uniqueId={inputList[2].uniqueId}
+					onChangeFunc={setTagsInput}
+				/>
 				<ButtonWrapper>
-					<Button type="goBack" />
-					<Button type="save" />
+					<Button type="save"
+						data={
+							{
+								title: titleInput,
+								link: linkInput,
+								tags: tagsInput,
+								date: new Date(Date.now()).toJSON().split("T")[0]
+							}
+						} 
+					/>
 				</ButtonWrapper>
 			</FormWrapper>
 		</MainWrapper>		
 	);
 };
 
-const MainWrapper = styled.main`
+const MainWrapper = styled.div`
 	width: 100%;
 	padding: 0 10%;
 	display: flex;
@@ -60,7 +80,7 @@ const FormWrapper = styled.form`
 const ButtonWrapper =  styled.div`
 	flex: 1;
 	display: flex;
-	flex-direction: row;
+	flex-direction: row-reverse;
 	justify-content: space-between;
 	align-items: center;
 `;

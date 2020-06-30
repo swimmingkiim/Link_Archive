@@ -1,9 +1,14 @@
 import React from "react";
 import styled from "styled-components"
 
-const Input = ({displayString, uniqueId, onChangeFunc=null}) => {
+const Input = ({displayString="", uniqueId, onChangeFunc=null}) => {
 	return (
-		<InputWrapper id={uniqueId} placeholder={displayString} onChange={(event) => onChangeFunc ? onChangeFunc(event.target.value) : null} />
+		<InputWrapper
+			type={uniqueId === "updateId" ? "hidden" : "text" }
+			id={uniqueId}
+			placeholder={displayString}
+			onChange={(event) => onChangeFunc ? onChangeFunc(event.target.value) : null}
+		/>
 	);
 }
 

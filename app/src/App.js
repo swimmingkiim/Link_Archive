@@ -1,42 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import LinkList from "../src/state/LinkList";
 import Title from "../src/basicComponent/Title";
 import MainList from "../src/page/MainList";
 import Form from "../src/page/Form";
 
 const App = () => {
-	
-	const sampleData = [
-		{
-			id: 1,
-			title: "my intro website with github",
-			link: "https://github.com/swimmingkiim",
-			tags: "HTML, CSS, JS, React, create-react-app",
-			date: "2020-06-27"
-		},
-		{
-			id: 12345,
-			title: "my family photo website",
-			link: "httPs://google.com",
-			tags: "Go, google, search, FANG",
-			date: "1992-08-08"
-		},
-		{
-			id: 1004,
-			title: "angel",
-			link: "http://angel.com",
-			tags: "GOD, angel, Jesus, believe",
-			date: "2020-06-27"
-		},
-	];
+
+	const [linkId, setLinkId] = useState(null);
 
   return (
 		<>
 			<GlobalStyle></GlobalStyle>
-			<MainWrapper>
-				<Title />
-					<Form />
-			</MainWrapper>
+			<LinkList.Provider initialState={{}}>
+				<MainWrapper>
+					<Title />
+					<Form linkId={linkId} resetLinkId={setLinkId}/>
+					<MainList setLinkId={setLinkId} />
+				</MainWrapper>
+			</LinkList.Provider>
 		</>
   );
 };

@@ -1,15 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import LinkList from "../../state/LinkList";
 import StyleConfig from "./styleConfig";
 import Logic from "./logic";
 
-const Button = ({ type, updateId = null }) => {
+const Button = ({ type, updateId=null, data=null }) => {
+
+	const linkList = LinkList.useContainer();
+
   return (
     <CustomButton
 			className={type + "-button"}
-      type={type === "save" ? "submit" : "button"}
+      type={"button"}
       data-post-id={String(updateId)}
-      onClick={(event) => Logic[type](event)}
+      onClick={() => {
+					if (type === "save") Logic[type](data, linkList);
+					else if (type === "delete" || type === "update") Logic[type](updateId, linkList);
+					else Logic[type]();
+				}
+			}
       styles={StyleConfig[type]}
     >
       {type !== "goBack" ? type : "go back"}
