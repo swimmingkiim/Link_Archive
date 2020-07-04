@@ -33,9 +33,13 @@ const GlobalStyle = createGlobalStyle`
 		padding: 0;
 	}
 `;
-const MainWrapper = styled.div`
+const MainWrapper = styled.main`
 	width: 100%;
-	padding: 2%;
+	padding: 2.5% 30%;
+
+	@media only screen and (max-width: 1024px) {
+		padding: 2.5% 10%;
+	}
 `;
 
 export default App;

@@ -23,11 +23,12 @@ const SearchBarWrapper = styled.section`
 	padding: 1% 0;
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
 
 	section + input {
-		margin-left: 2.5%;
+		margin-top: 2.5%;
 	}
 `;
 

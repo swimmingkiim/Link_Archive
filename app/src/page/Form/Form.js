@@ -59,9 +59,9 @@ const Form = () => {
 	);
 };
 
-const MainWrapper = styled.div`
+const MainWrapper = styled.section`
 	width: 100%;
-	padding: 0 10%;
+	padding: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;

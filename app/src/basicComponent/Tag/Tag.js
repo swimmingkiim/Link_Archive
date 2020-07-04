@@ -36,7 +36,7 @@ const SingleTag = styled.li`
 	display: block;
 	padding: .25% 1%;
 	border-radius: 10%;
-	background-color: magenta;
+	background-color: #EBD40B;
 	text-align: center;
 
 	& + & {
