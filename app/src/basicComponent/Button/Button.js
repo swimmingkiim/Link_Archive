@@ -1,27 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import LinkList from "../../state/LinkList";
+import GlobContext from "../../state/globContext";
 import StyleConfig from "./styleConfig";
-import Logic from "./logic";
 
-const Button = ({ type, updateId=null, data=null }) => {
+const Button = ({ type, updateId }) => {
 
-	const linkList = LinkList.useContainer();
+	const { dispatchCurrentState } = useContext(GlobContext);
 
   return (
     <CustomButton
 			className={type + "-button"}
-      type={"button"}
-      data-post-id={String(updateId)}
-      onClick={() => {
-					if (type === "save") Logic[type](data, linkList);
-					else if (type === "delete" || type === "update") Logic[type](updateId, linkList);
-					else Logic[type]();
-				}
-			}
+      type="button"
+			onClick={() => {
+				dispatchCurrentState({type: "currentMode", value: type, ...(updateId) && {id: updateId}})
+			}}
       styles={StyleConfig[type]}
     >
-      {type !== "goBack" ? type : "go back"}
+      {type}
     </CustomButton>
   );
 };

@@ -1,24 +1,112 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import LinkList from "../src/state/LinkList";
+import CurrentState from "./state/currentState";
+import Store from "./state/store";
+import GlobContext from "./state/globContext";
 import Title from "../src/basicComponent/Title";
 import MainList from "../src/page/MainList";
 import Form from "../src/page/Form";
 
 const App = () => {
 
-	const [linkId, setLinkId] = useState(null);
+	const [currentState, dispatchCurrentState] = useReducer(CurrentState.reducer, CurrentState.initialCurrentState);
+	const [store, dispatchStore] = useReducer(Store.reducer, Store.initialStore);
+
+	const clearCurrentState = () => {
+		dispatchCurrentState({type: "clear"});
+	}
+
+	const createLinkData = () => {
+		dispatchStore({
+			type: "create",
+			value: {
+				...currentState.inputs,
+				date: new Date(Date.now()).toJSON().split("T")[0]
+			}
+		});
+		clearCurrentState();
+	};
+	const readLinkData = () => {
+		const { title, link, tags } = store[currentState.updateId]
+		dispatchCurrentState({
+			type: "inputs",
+			value: {
+				name: "title",
+				string: title
+			}
+		});
+		dispatchCurrentState({
+			type: "inputs",
+			value: {
+				name: "link",
+				string: link
+			}
+		});
+		dispatchCurrentState({
+			type: "inputs",
+			value: {
+				name: "tags",
+				string: tags
+			}
+		});
+	};
+	const updateLinkData = () => {
+		dispatchStore({
+			type: "update",
+			value: {
+				...currentState.inputs,
+				date: new Date(Date.now()).toJSON().split("T")[0],
+				id: currentState.updateId
+			}
+		});
+		clearCurrentState();
+	};
+	const deleteLinkData = () => {
+    if (window.confirm("Do you really want to delete this link?")) {
+			dispatchStore({
+				type: "delete",
+				value: {
+					id: currentState.updateId
+				}
+			});
+    }
+		clearCurrentState();
+	};
+
+	const applyChangeByCurrentMode = () => {
+		switch (currentState.currentMode) {
+			case "save":
+				if (currentState.updateId === null) createLinkData();
+				else updateLinkData();
+				break;
+			case "update":
+				readLinkData();
+				break;
+			case "edit":
+				dispatchCurrentState({type: "currentMode", value: "edit"});
+				break;
+			case "delete":
+				deleteLinkData();
+				break;
+			default:
+				null;
+		};
+	};
+
+	useEffect(() => {
+		applyChangeByCurrentMode();
+	}, [currentState.currentMode]);
 
   return (
 		<>
 			<GlobalStyle></GlobalStyle>
-			<LinkList.Provider initialState={{}}>
-				<MainWrapper>
-					<Title />
-					<Form linkId={linkId} resetLinkId={setLinkId}/>
-					<MainList setLinkId={setLinkId} />
-				</MainWrapper>
-			</LinkList.Provider>
+			<MainWrapper>
+				<Title />
+				<GlobContext.Provider value={{currentState, dispatchCurrentState, store}}>
+					<Form />
+					<MainList />
+				</GlobContext.Provider>
+			</MainWrapper>
 		</>
   );
 };

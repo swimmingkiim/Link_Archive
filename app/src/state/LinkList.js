@@ -4,8 +4,7 @@ import { createContainer } from "unstated-next";
 const useLinkList = (initialState = {}) => {
 	const [linkList, setLinkList] = useState(initialState);
 	const [newId, setNewId] = useState(1);
-	const [globalUpdateId, setGlobalUpdateId] = useState(null);
-	const addLink = (newDataObject) => {
+	const createLink = (newDataObject) => {
 		setLinkList({
 			...linkList, 
 			[newId]: {	
@@ -18,20 +17,18 @@ const useLinkList = (initialState = {}) => {
 	const updateLink = (modifiedDataObject) => {
 		setLinkList({
 			...linkList,
-			[globalUpdateId]: {
+			[modifiedDataObject.id]: {
 				...modifiedDataObject,
-				id: globalUpdateId
 			},
 		});
 	}
-	const updateGlobalUpdateId = (id = null) => setGlobalUpdateId(id);
 	const readLinkList = () => Object.values(linkList);
 	const getLinkData = (id) => linkList[id];
 	const deleteLink = (id) => {
 			const {[id]: undefined, ...newLinkList} = linkList;
 			setLinkList(newLinkList);
 	}
-	return { linkList,globalUpdateId, addLink, updateLink, updateGlobalUpdateId, readLinkList, getLinkData, deleteLink };
+	return { linkList, createLink, updateLink, readLinkList, getLinkData, deleteLink };
 };
 
 const LinkList = createContainer(useLinkList);

@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
+import GlobContext from "../../state/globContext";
 import Button from "../../basicComponent/Button";
 import Input from "../../basicComponent/Input";
 
 const Form = () => {
-	
-	const [titleInput, setTitleInput] = useState("");
-	const [linkInput, setLinkInput] = useState("");
-	const [tagsInput, setTagsInput] = useState("");
 
 	const inputList = [
 		{
@@ -30,29 +27,17 @@ const Form = () => {
 				<Input
 					displayString={inputList[0].displayString}
 					uniqueId={inputList[0].uniqueId}
-					onChangeFunc={setTitleInput}
 				/>
 				<Input
 					displayString={inputList[1].displayString}
 					uniqueId={inputList[1].uniqueId}
-					onChangeFunc={setLinkInput}
 				/>
 				<Input
 					displayString={inputList[2].displayString}
 					uniqueId={inputList[2].uniqueId}
-					onChangeFunc={setTagsInput}
 				/>
 				<ButtonWrapper>
-					<Button type="save"
-						data={
-							{
-								title: titleInput,
-								link: linkInput,
-								tags: tagsInput,
-								date: new Date(Date.now()).toJSON().split("T")[0]
-							}
-						} 
-					/>
+					<Button type="save" />
 				</ButtonWrapper>
 			</FormWrapper>
 		</MainWrapper>		

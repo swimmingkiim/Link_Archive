@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import GlobContext from "../../state/globContext";
 import styled from "styled-components"
 
-const Input = ({displayString="", uniqueId, onChangeFunc=null}) => {
+const Input = ({ displayString="", uniqueId }) => {
+	
+	const { currentState, dispatchCurrentState } = useContext(GlobContext);
+
 	return (
 		<InputWrapper
-			type={uniqueId === "updateId" ? "hidden" : "text" }
+			type="text"
 			id={uniqueId}
 			placeholder={displayString}
-			onChange={(event) => onChangeFunc ? onChangeFunc(event.target.value) : null}
+			value={currentState.inputs[uniqueId]}
+			onChange={(event) => dispatchCurrentState({type: "inputs", value: { name: uniqueId, string: event.target.value }})}
 		/>
 	);
 }

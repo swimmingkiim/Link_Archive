@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import LinkList from "../../state/LinkList";
+import GlobContext from "../../state/globContext";
 import Button from "../../basicComponent/Button";
 import ListItem from "../../composedComponent/ListItem";
 import SearchBar from "../../composedComponent/SearchBar";
@@ -10,7 +10,8 @@ const MainList = () => {
 	
 	const [ filterMode, setFilterMode ] = useState("tag");
 	const [ filterString, setFilterString ] = useState("");
-	const linkList = LinkList.useContainer();
+	const { currentState, store } = useContext(GlobContext);
+	const linkList = Object.values(store);
 
 	const handleFilterMode = (mode) => {
 		setFilterMode(mode);
@@ -21,7 +22,8 @@ const MainList = () => {
 	}
 
 	const filterDataList = (mode, string) => {
-		return linkList.readLinkList().filter((data) => {
+		return linkList.filter((data) => {
+			if (data === undefined) return ;
 			if (mode === "id") return data[mode] === Number(string);
 			else if (mode === "tag") {
 				const givenTags = tagStringToTagArray(data["tags"].toLowerCase());
@@ -32,7 +34,7 @@ const MainList = () => {
 	};
 
 	return (
-		<MainListWrapper id="main-list">
+		<MainListWrapper id="main-list" className={currentState.currentMode === "edit" ? "edit-mode" : null}>
 			<SearchBar handleFilterMode={handleFilterMode} handleFilterString={handleFilterString}/>
 			<ButtonWrapper>
 				<Button type="edit" />
@@ -44,7 +46,7 @@ const MainList = () => {
 						<ListItem key={data.id} data={data} />
 					);
 				})
-				: linkList.readLinkList().map((data) => {
+				: linkList.map((data) => {
 					if (data) {
 						return (
 							<ListItem key={data.id} data={data} />

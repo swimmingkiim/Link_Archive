@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Input from "../../basicComponent/Input";
 import Select from "../../basicComponent/Select";
 
 const SearchBar = ({ handleFilterMode, handleFilterString }) => {
@@ -10,9 +9,9 @@ const SearchBar = ({ handleFilterMode, handleFilterString }) => {
 		<SearchBarWrapper>
 			<Select onChangeFunc={handleFilterMode}/>
 			<Input
-				displayString="Type Your Keyword"
-				uniqueId="search-string"
-				onChangeFunc={handleFilterString}
+				placeholder="Type Your Keyword"
+				id="search-string"
+				onInput={(event) => handleFilterString(event.target.value)}
 			/>
 		</SearchBarWrapper>
 	);
@@ -29,6 +28,19 @@ const SearchBarWrapper = styled.section`
 
 	section + input {
 		margin-top: 2.5%;
+	}
+`;
+
+const Input = styled.input`
+	display: block;
+	width: 100%;
+	flex: auto;
+	padding: .5%;
+	font-size: 150%;
+	border: 1px solid black;
+
+	& + & {
+		margin-top: 5%;
 	}
 `;
 
